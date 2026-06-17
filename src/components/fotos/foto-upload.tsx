@@ -31,7 +31,6 @@ export function FotoUpload({ onUpload, tipo }: FotoUploadProps) {
     try {
       const newBlob = await put(file.name, file, {
         access: "public",
-        multipartThreshold: 4 * 1024 * 1024, // 4MB
       });
 
       onUpload(newBlob.url, tipo);
