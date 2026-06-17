@@ -1,0 +1,238 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  ADMIN
+  OPERARIO
+  RECEPCION
+}
+
+model User {
+  id                      String                  @id @default(cuid())
+  nombre                  String
+  email                   String                  @unique
+  passwordHash            String
+  role                    Role                    @default(RECEPCION)
+  activo                  Boolean                 @default(true)
+  gastos                  Gasto[]
+  movimientosInventario   MovimientoInventario[]
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+}
+
+enum TipoCliente {
+  PERSONA
+  EMPRESA
+}
+
+enum EstadoOrden {
+  PENDIENTE
+  EN_PRODUCCION
+  COMPLETADA
+  ENTREGADA
+  CANCELADA
+}
+
+enum TipoGasto {
+  FIJO
+  VARIABLE
+}
+
+model Cliente {
+  id                    String                 @id @default(cuid())
+  tipo                  TipoCliente            @default(PERSONA)
+  nombre                String
+  documento             String?
+  telefono              String?
+  whatsapp              String?
+  correo                String?
+  direccion             String?
+  contactoNombre        String?
+  contactoTelefono      String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  ordenesProduccion     OrdenProduccion[]
+  serviciosClinica      ServicioClinica[]
+  pedidosConfeccion     PedidoConfeccion[]
+
+  @@index([nombre])
+}
+
+model OrdenProduccion {
+  id             String          @id @default(cuid())
+  numero         String          @unique
+  clienteId      String
+  cliente        Cliente         @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  fechaIngreso   DateTime        @default(now())
+  fechaEntrega   DateTime?
+  estado         EstadoOrden     @default(PENDIENTE)
+  notas          String?
+  productos      ProductoOrden[]
+  gastos         Gasto[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([clienteId])
+  @@index([numero])
+  @@index([estado])
+}
+
+model ProductoOrden {
+  id             String          @id @default(cuid())
+  ordenId        String
+  orden          OrdenProduccion @relation(fields: [ordenId], references: [id], onDelete: Cascade)
+  tipoPrenda     String
+  cantidad       Int
+  valorUnitario  Decimal         @db.Decimal(10, 2)
+  total          Decimal         @db.Decimal(10, 2)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([ordenId])
+}
+
+model Gasto {
+  id                  String           @id @default(cuid())
+  concepto            String
+  categoria           String
+  tipo                TipoGasto
+  monto               Decimal          @db.Decimal(10, 2)
+  fecha               DateTime
+  ordenId             String?
+  orden               OrdenProduccion? @relation(fields: [ordenId], references: [id], onDelete: SetNull)
+  servicioClinicaId   String?
+  servicioClinica     ServicioClinica? @relation(fields: [servicioClinicaId], references: [id], onDelete: SetNull)
+  notas               String?
+  createdByUserId     String
+  createdBy           User             @relation(fields: [createdByUserId], references: [id])
+  createdAt           DateTime         @default(now())
+
+  @@index([ordenId])
+  @@index([servicioClinicaId])
+  @@index([tipo])
+  @@index([fecha])
+}
+
+model ServicioClinica {
+  id                    String                 @id @default(cuid())
+  clienteId             String
+  cliente               Cliente                @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  prendaTipo            String
+  prendaDescripcion     String?
+  trabajoSolicitado     String
+  estado                EstadoOrden            @default(PENDIENTE)
+  fechaRecibido         DateTime               @default(now())
+  fechaEntregaEstimada  DateTime?
+  valorCotizado         Decimal                @db.Decimal(10, 2)
+  anticipo              Decimal                @db.Decimal(10, 2) @default(0)
+  saldoPendiente        Decimal                @db.Decimal(10, 2)
+  fotos                 FotoServicio[]
+  gastos                Gasto[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@index([clienteId])
+  @@index([estado])
+}
+
+model FotoServicio {
+  id                String          @id @default(cuid())
+  servicioId        String
+  servicio          ServicioClinica @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+  tipo              String          // "ANTES" o "DESPUES"
+  url               String
+  createdAt         DateTime        @default(now())
+
+  @@index([servicioId])
+}
+
+model PedidoConfeccion {
+  id                String         @id @default(cuid())
+  clienteId         String
+  cliente           Cliente        @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  tipoPrenda        String
+  diseño            String?
+  observaciones     String?
+  fechaEntrega      DateTime?
+  precio            Decimal        @db.Decimal(10, 2)
+  estado            EstadoOrden    @default(PENDIENTE)
+  medidaSnapshotId  String?
+  medidaSnapshot    MedidaSnapshot? @relation(fields: [medidaSnapshotId], references: [id], onDelete: SetNull)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  @@index([clienteId])
+  @@index([estado])
+}
+
+model MedidaSnapshot {
+  id                String          @id @default(cuid())
+  clienteId         String
+  fecha             DateTime        @default(now())
+  notas             String?
+  medidas           Medida[]
+  pedidosConfeccion PedidoConfeccion[]
+  createdAt         DateTime        @default(now())
+}
+
+model Medida {
+  id          String         @id @default(cuid())
+  snapshotId  String
+  snapshot    MedidaSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  nombre      String
+  valor       String
+  unidad      String
+  orden       Int
+  createdAt   DateTime       @default(now())
+
+  @@index([snapshotId])
+}
+
+model PlantillaMedida {
+  id              String @id @default(cuid())
+  tipoPrenda      String
+  nombre          String
+  unidadDefault   String
+  orden           Int
+}
+
+model Insumo {
+  id                  String                  @id @default(cuid())
+  nombre              String
+  unidad              String
+  costoUnitario       Decimal                 @db.Decimal(10, 2)
+  stockMinimo         Int
+  movimientos         MovimientoInventario[]
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  @@index([nombre])
+}
+
+model MovimientoInventario {
+  id              String   @id @default(cuid())
+  insumoId        String
+  insumo          Insumo   @relation(fields: [insumoId], references: [id], onDelete: Cascade)
+  tipo            String   // "ENTRADA", "SALIDA", "AJUSTE"
+  cantidad        Int
+  costoUnitario   Decimal  @db.Decimal(10, 2)
+  motivo          String
+  ordenId         String?
+  createdByUserId String
+  createdBy       User     @relation(fields: [createdByUserId], references: [id])
+  createdAt       DateTime @default(now())
+
+  @@index([insumoId])
+  @@index([ordenId])
+}
