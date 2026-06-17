@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { requireSession } from "@/lib/auth-guards";
 import { calcularRentabilidadOrden } from "@/lib/services/rentabilidad";
+import { CambiarEstado } from "../cambiar-estado";
 
 export default async function DetalleOrdenPage(props: {
   params: Promise<{ id: string }>;
@@ -175,6 +176,13 @@ export default async function DetalleOrdenPage(props: {
           )}
         </div>
       </div>
+
+      <CambiarEstado
+        ordenId={orden.id}
+        estadoActual={orden.estado}
+        numero={orden.numero}
+        clienteId={orden.clienteId}
+      />
     </div>
   );
 }
