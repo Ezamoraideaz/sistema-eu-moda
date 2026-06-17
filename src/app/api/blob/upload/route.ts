@@ -1,9 +1,8 @@
-import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const body = (await request.json()) as HandleUploadBody;
   const session = await auth();
 
   if (!session?.user) {
@@ -11,24 +10,31 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const jsonResponse = await handleUpload({
-      body,
-      request,
-      onBeforeGenerateToken: async () => {
-        return {
-          allowedContentTypes: ["image/jpeg", "image/png", "image/webp"],
-          tokenPayload: JSON.stringify({ userId: session.user.id }),
-        };
-      },
-      onUploadCompleted: async () => {
-        // Foto guardada exitosamente
-      },
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    }
+
+    // Validar tipo de archivo
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        { error: "Tipo de archivo no permitido. Usa JPEG, PNG o WebP" },
+        { status: 400 }
+      );
+    }
+
+    const blob = await put(file.name, file, {
+      access: "public",
     });
 
-    return NextResponse.json(jsonResponse);
+    return NextResponse.json({ url: blob.url });
   } catch (error) {
+    console.error("Error uploading blob:", error);
     return NextResponse.json(
-      { error: (error as Error).message },
+      { error: (error as Error).message || "Error al subir archivo" },
       { status: 400 }
     );
   }

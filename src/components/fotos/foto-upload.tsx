@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { put } from "@vercel/blob/client";
 
 interface FotoUploadProps {
   onUpload: (url: string, tipo: "ANTES" | "DESPUES") => void;
@@ -29,11 +28,21 @@ export function FotoUpload({ onUpload, tipo }: FotoUploadProps) {
     setError("");
 
     try {
-      const newBlob = await put(file.name, file, {
-        access: "public",
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/blob/upload", {
+        method: "POST",
+        body: formData,
       });
 
-      onUpload(newBlob.url, tipo);
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Error al subir foto");
+      }
+
+      const data = await res.json();
+      onUpload(data.url, tipo);
 
       if (inputFileRef.current) {
         inputFileRef.current.value = "";
