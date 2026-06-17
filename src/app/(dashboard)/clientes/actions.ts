@@ -24,7 +24,7 @@ function readClienteForm(formData: FormData) {
 }
 
 export async function createCliente(_prevState: ClienteFormState, formData: FormData): Promise<ClienteFormState> {
-  await requireRole(PERMISSIONS.REGISTRAR_CLIENTE);
+  await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
 
   const parsed = clienteSchema.safeParse(readClienteForm(formData));
   if (!parsed.success) {
@@ -37,7 +37,7 @@ export async function createCliente(_prevState: ClienteFormState, formData: Form
 }
 
 export async function updateCliente(_prevState: ClienteFormState, formData: FormData): Promise<ClienteFormState> {
-  await requireRole(PERMISSIONS.REGISTRAR_CLIENTE);
+  await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
 
   const id = formData.get("id");
   if (typeof id !== "string" || !id) {

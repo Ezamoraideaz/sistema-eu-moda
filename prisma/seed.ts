@@ -1,4 +1,5 @@
-import { PrismaClient } from "../src/generated/prisma/client";
+import "dotenv/config";
+import { PrismaClient } from "../src/lib/prisma-client/client";
 import { createMariaDbAdapter } from "../src/lib/db-adapter";
 import { hash } from "bcryptjs";
 
