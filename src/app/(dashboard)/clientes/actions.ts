@@ -25,18 +25,30 @@ function readClienteForm(formData: FormData) {
 
 export async function createCliente(_prevState: ClienteFormState, formData: FormData): Promise<ClienteFormState> {
   try {
-    await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
+    console.log("🔍 createCliente: iniciando...");
 
-    const parsed = clienteSchema.safeParse(readClienteForm(formData));
+    await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
+    console.log("✅ Rol verificado");
+
+    const datos = readClienteForm(formData);
+    console.log("📋 Datos del formulario:", datos);
+
+    const parsed = clienteSchema.safeParse(datos);
     if (!parsed.success) {
+      console.log("❌ Validación falló:", parsed.error.flatten().fieldErrors);
       return { fieldErrors: parsed.error.flatten().fieldErrors };
     }
 
+    console.log("✅ Datos validados");
+
     const cliente = await prisma.cliente.create({ data: parsed.data });
+    console.log("✅ Cliente creado:", cliente.id);
+
     revalidatePath("/clientes");
 
     return { success: true, clienteId: cliente.id };
   } catch (error) {
+    console.error("💥 Error en createCliente:", error);
     return { error: error instanceof Error ? error.message : "Error al crear cliente" };
   }
 }
