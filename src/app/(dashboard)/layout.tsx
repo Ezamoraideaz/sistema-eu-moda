@@ -27,6 +27,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <a href="/produccion" className="rounded-md px-3 py-2 font-medium text-gray-700 hover:bg-gray-100">
             Producción
           </a>
+          <a href="/clinica" className="rounded-md px-3 py-2 font-medium text-gray-700 hover:bg-gray-100">
+            Clínica de Ropa
+          </a>
         </nav>
       </aside>
 
