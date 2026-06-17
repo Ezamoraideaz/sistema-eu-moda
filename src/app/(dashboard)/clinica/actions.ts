@@ -13,20 +13,25 @@ export async function crearServicioClinicaAction(data: unknown) {
   }
 
   try {
-    const valorCotizado = parseFloat(parsed.data.valorCotizado);
-    const anticipo = parseFloat(parsed.data.anticipo || "0");
-    const saldoPendiente = valorCotizado - anticipo;
-
     const servicio = await prisma.servicioClinica.create({
       data: {
         clienteId: parsed.data.clienteId,
-        prendaTipo: parsed.data.prendaTipo,
-        prendaDescripcion: parsed.data.prendaDescripcion || null,
-        trabajoSolicitado: parsed.data.trabajoSolicitado,
-        valorCotizado: valorCotizado,
-        anticipo: anticipo,
-        saldoPendiente: saldoPendiente,
         fechaEntregaEstimada: parsed.data.fechaEntregaEstimada ? new Date(parsed.data.fechaEntregaEstimada) : null,
+        items: {
+          create: parsed.data.items.map((item) => {
+            const valorCotizado = parseFloat(item.valorCotizado);
+            const anticipo = parseFloat(item.anticipo || "0");
+            const saldoPendiente = valorCotizado - anticipo;
+            return {
+              prendaTipo: item.prendaTipo,
+              prendaDescripcion: item.prendaDescripcion || null,
+              trabajoSolicitado: item.trabajoSolicitado,
+              valorCotizado,
+              anticipo,
+              saldoPendiente,
+            };
+          }),
+        },
       },
     });
 
@@ -46,32 +51,11 @@ export async function actualizarServicioClinicaAction(servicioId: string, data: 
   }
 
   try {
-    // Si solo estamos cambiando estado, obtenemos los valores actuales
-    const existente = await prisma.servicioClinica.findUnique({
-      where: { id: servicioId },
-    });
-
-    if (!existente) {
-      return { error: "Servicio no encontrado" };
-    }
-
-    const prendaTipo = parsed.data.prendaTipo || existente.prendaTipo;
-    const prendaDescripcion = parsed.data.prendaDescripcion || existente.prendaDescripcion;
-    const trabajoSolicitado = parsed.data.trabajoSolicitado || existente.trabajoSolicitado;
-    const valorCotizado = parsed.data.valorCotizado ? parseFloat(parsed.data.valorCotizado) : parseFloat(existente.valorCotizado.toString());
-    const anticipo = parsed.data.anticipo ? parseFloat(parsed.data.anticipo) : parseFloat(existente.anticipo.toString());
-    const saldoPendiente = valorCotizado - anticipo;
-
     const servicio = await prisma.servicioClinica.update({
       where: { id: servicioId },
       data: {
-        prendaTipo,
-        prendaDescripcion: prendaDescripcion || null,
-        trabajoSolicitado,
         estado: parsed.data.estado as any,
-        valorCotizado,
-        anticipo,
-        saldoPendiente,
+        fechaEntregaEstimada: parsed.data.fechaEntregaEstimada ? new Date(parsed.data.fechaEntregaEstimada) : undefined,
       },
     });
 
@@ -79,6 +63,50 @@ export async function actualizarServicioClinicaAction(servicioId: string, data: 
   } catch (error) {
     console.error("Error updating servicio:", error);
     return { error: "No se pudo actualizar el servicio" };
+  }
+}
+
+export async function agregarItemServicioAction(servicioId: string, data: unknown) {
+  const session = await requireRole(["ADMIN", "RECEPCION"]);
+
+  try {
+    const item = {
+      prendaTipo: (data as any).prendaTipo,
+      prendaDescripcion: (data as any).prendaDescripcion || null,
+      trabajoSolicitado: (data as any).trabajoSolicitado,
+      valorCotizado: parseFloat((data as any).valorCotizado),
+      anticipo: parseFloat((data as any).anticipo || "0"),
+    };
+
+    item.valorCotizado - item.anticipo; // calcular saldo
+
+    const newItem = await prisma.itemServicioClinica.create({
+      data: {
+        servicioId,
+        ...item,
+        saldoPendiente: item.valorCotizado - item.anticipo,
+      },
+    });
+
+    return { success: true, itemId: newItem.id };
+  } catch (error) {
+    console.error("Error adding item:", error);
+    return { error: "No se pudo agregar el item" };
+  }
+}
+
+export async function eliminarItemServicioAction(itemId: string) {
+  const session = await requireRole(["ADMIN", "RECEPCION"]);
+
+  try {
+    await prisma.itemServicioClinica.delete({
+      where: { id: itemId },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    return { error: "No se pudo eliminar el item" };
   }
 }
 

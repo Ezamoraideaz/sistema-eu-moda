@@ -10,6 +10,7 @@ export default async function ClinicaPage() {
     include: {
       cliente: true,
       fotos: true,
+      items: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -69,54 +70,58 @@ export default async function ClinicaPage() {
                   No hay servicios registrados aún
                 </div>
               ) : (
-                servicios.map((servicio) => (
-                  <Link
-                    key={servicio.id}
-                    href={`/clinica/${servicio.id}`}
-                    className="block px-6 py-4 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3">
-                          <h3 className="font-medium text-gray-900">
-                            {servicio.prendaTipo}
-                            {servicio.prendaDescripcion && (
-                              <span className="ml-2 text-sm text-gray-600">
-                                ({servicio.prendaDescripcion})
-                              </span>
+                servicios.map((servicio) => {
+                  const totalValor = servicio.items.reduce(
+                    (sum, item) => sum + parseFloat(item.valorCotizado.toString()),
+                    0
+                  );
+                  const prendas = servicio.items.map((i) => i.prendaTipo).join(", ");
+
+                  return (
+                    <Link
+                      key={servicio.id}
+                      href={`/clinica/${servicio.id}`}
+                      className="block px-6 py-4 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <h3 className="font-medium text-gray-900">
+                              {prendas}
+                            </h3>
+                            <span
+                              className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${getEstadoColor(
+                                servicio.estado
+                              )}`}
+                            >
+                              {getEstadoLabel(servicio.estado)}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-sm text-gray-600">
+                            {servicio.cliente.nombre}
+                          </p>
+                          <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
+                            <span>
+                              💰 ${totalValor.toLocaleString(
+                                "es-CO",
+                                {
+                                  minimumFractionDigits: 0,
+                                }
+                              )}
+                            </span>
+                            <span>👕 {servicio.items.length} prenda{servicio.items.length !== 1 ? 's' : ''}</span>
+                            {servicio.fotos.length > 0 && (
+                              <span>📸 {servicio.fotos.length} fotos</span>
                             )}
-                          </h3>
-                          <span
-                            className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${getEstadoColor(
-                              servicio.estado
-                            )}`}
-                          >
-                            {getEstadoLabel(servicio.estado)}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-sm text-gray-600">
-                          {servicio.cliente.nombre}
-                        </p>
-                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
-                          <span>
-                            💰 ${parseFloat(servicio.valorCotizado.toString()).toLocaleString(
-                              "es-CO",
-                              {
-                                minimumFractionDigits: 0,
-                              }
+                            {servicio.fechaEntregaEstimada && (
+                              <span>📅 {servicio.fechaEntregaEstimada.toLocaleDateString()}</span>
                             )}
-                          </span>
-                          {servicio.fotos.length > 0 && (
-                            <span>📸 {servicio.fotos.length} fotos</span>
-                          )}
-                          {servicio.fechaEntregaEstimada && (
-                            <span>📅 {servicio.fechaEntregaEstimada.toLocaleDateString()}</span>
-                          )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ))
+                    </Link>
+                  );
+                })
               )}
             </div>
           </div>

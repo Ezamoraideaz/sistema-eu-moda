@@ -128,15 +128,16 @@ model ServicioClinica {
   id                    String                 @id @default(cuid())
   clienteId             String
   cliente               Cliente                @relation(fields: [clienteId], references: [id], onDelete: Cascade)
-  prendaTipo            String
+  prendaTipo            String?
   prendaDescripcion     String?
-  trabajoSolicitado     String
+  trabajoSolicitado     String?
   estado                EstadoOrden            @default(PENDIENTE)
   fechaRecibido         DateTime               @default(now())
   fechaEntregaEstimada  DateTime?
-  valorCotizado         Decimal                @db.Decimal(10, 2)
-  anticipo              Decimal                @db.Decimal(10, 2) @default(0)
-  saldoPendiente        Decimal                @db.Decimal(10, 2)
+  valorCotizado         Decimal?               @db.Decimal(10, 2)
+  anticipo              Decimal?               @db.Decimal(10, 2)
+  saldoPendiente        Decimal?               @db.Decimal(10, 2)
+  items                 ItemServicioClinica[]
   fotos                 FotoServicio[]
   gastos                Gasto[]
   createdAt             DateTime               @default(now())
@@ -144,6 +145,22 @@ model ServicioClinica {
 
   @@index([clienteId])
   @@index([estado])
+}
+
+model ItemServicioClinica {
+  id                    String                 @id @default(cuid())
+  servicioId            String
+  servicio              ServicioClinica        @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+  prendaTipo            String
+  prendaDescripcion     String?
+  trabajoSolicitado     String
+  valorCotizado         Decimal                @db.Decimal(10, 2)
+  anticipo              Decimal                @db.Decimal(10, 2) @default(0)
+  saldoPendiente        Decimal                @db.Decimal(10, 2)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@index([servicioId])
 }
 
 model FotoServicio {
