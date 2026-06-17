@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { requireSession } from "@/lib/auth-guards";
 import { calcularRentabilidadOrden } from "@/lib/services/rentabilidad";
-import { OrdenForm } from "../orden-form";
 
 export default async function DetalleOrdenPage(props: {
   params: Promise<{ id: string }>;
@@ -158,21 +157,22 @@ export default async function DetalleOrdenPage(props: {
       )}
 
       <div className="rounded-lg border border-gray-200 bg-white p-6">
-        <h2 className="font-semibold text-gray-900">Editar orden</h2>
-        <div className="mt-4">
-          <OrdenForm
-            editar={{
-              id: orden.id,
-              numero: orden.numero,
-              clienteId: orden.clienteId,
-              fechaEntrega: orden.fechaEntrega?.toISOString().split("T")[0] || null,
-              estado: orden.estado,
-              notas: orden.notas,
-            }}
-            onSuccess={() => {
-              // Página se recargará automáticamente
-            }}
-          />
+        <h2 className="font-semibold text-gray-900">Información de la orden</h2>
+        <div className="mt-4 space-y-4">
+          <div>
+            <p className="text-sm font-medium text-gray-700">Cliente</p>
+            <p className="text-gray-900">{orden.cliente.nombre}</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-700">Fecha de ingreso</p>
+            <p className="text-gray-900">{new Date(orden.fechaIngreso).toLocaleDateString("es-CO")}</p>
+          </div>
+          {orden.notas && (
+            <div>
+              <p className="text-sm font-medium text-gray-700">Notas</p>
+              <p className="text-gray-900">{orden.notas}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
