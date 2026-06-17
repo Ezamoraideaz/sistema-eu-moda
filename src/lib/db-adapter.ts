@@ -11,6 +11,7 @@ export function createMariaDbAdapter(connectionLimit: number) {
     password: decodeURIComponent(url.password),
     database: url.pathname.replace(/^\//, ""),
     connectionLimit,
-    acquireTimeout: 10000,
+    acquireTimeout: 20000,
+    connectTimeout: 10000,
   });
 }
