@@ -390,6 +390,7 @@ export const ModelName = {
   ProductoOrden: 'ProductoOrden',
   Gasto: 'Gasto',
   ServicioClinica: 'ServicioClinica',
+  ItemServicioClinica: 'ItemServicioClinica',
   FotoServicio: 'FotoServicio',
   PedidoConfeccion: 'PedidoConfeccion',
   MedidaSnapshot: 'MedidaSnapshot',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "cliente" | "ordenProduccion" | "productoOrden" | "gasto" | "servicioClinica" | "fotoServicio" | "pedidoConfeccion" | "medidaSnapshot" | "medida" | "plantillaMedida" | "insumo" | "movimientoInventario"
+    modelProps: "user" | "cliente" | "ordenProduccion" | "productoOrden" | "gasto" | "servicioClinica" | "itemServicioClinica" | "fotoServicio" | "pedidoConfeccion" | "medidaSnapshot" | "medida" | "plantillaMedida" | "insumo" | "movimientoInventario"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -809,6 +810,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ServicioClinicaCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ServicioClinicaCountAggregateOutputType> | number
+        }
+      }
+    }
+    ItemServicioClinica: {
+      payload: Prisma.$ItemServicioClinicaPayload<ExtArgs>
+      fields: Prisma.ItemServicioClinicaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ItemServicioClinicaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ItemServicioClinicaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        findFirst: {
+          args: Prisma.ItemServicioClinicaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ItemServicioClinicaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        findMany: {
+          args: Prisma.ItemServicioClinicaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>[]
+        }
+        create: {
+          args: Prisma.ItemServicioClinicaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        createMany: {
+          args: Prisma.ItemServicioClinicaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ItemServicioClinicaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        update: {
+          args: Prisma.ItemServicioClinicaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        deleteMany: {
+          args: Prisma.ItemServicioClinicaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ItemServicioClinicaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ItemServicioClinicaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemServicioClinicaPayload>
+        }
+        aggregate: {
+          args: Prisma.ItemServicioClinicaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateItemServicioClinica>
+        }
+        groupBy: {
+          args: Prisma.ItemServicioClinicaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ItemServicioClinicaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ItemServicioClinicaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ItemServicioClinicaCountAggregateOutputType> | number
         }
       }
     }
@@ -1410,6 +1477,22 @@ export const ServicioClinicaScalarFieldEnum = {
 export type ServicioClinicaScalarFieldEnum = (typeof ServicioClinicaScalarFieldEnum)[keyof typeof ServicioClinicaScalarFieldEnum]
 
 
+export const ItemServicioClinicaScalarFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  prendaTipo: 'prendaTipo',
+  prendaDescripcion: 'prendaDescripcion',
+  trabajoSolicitado: 'trabajoSolicitado',
+  valorCotizado: 'valorCotizado',
+  anticipo: 'anticipo',
+  saldoPendiente: 'saldoPendiente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ItemServicioClinicaScalarFieldEnum = (typeof ItemServicioClinicaScalarFieldEnum)[keyof typeof ItemServicioClinicaScalarFieldEnum]
+
+
 export const FotoServicioScalarFieldEnum = {
   id: 'id',
   servicioId: 'servicioId',
@@ -1583,6 +1666,17 @@ export const ServicioClinicaOrderByRelevanceFieldEnum = {
 } as const
 
 export type ServicioClinicaOrderByRelevanceFieldEnum = (typeof ServicioClinicaOrderByRelevanceFieldEnum)[keyof typeof ServicioClinicaOrderByRelevanceFieldEnum]
+
+
+export const ItemServicioClinicaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  prendaTipo: 'prendaTipo',
+  prendaDescripcion: 'prendaDescripcion',
+  trabajoSolicitado: 'trabajoSolicitado'
+} as const
+
+export type ItemServicioClinicaOrderByRelevanceFieldEnum = (typeof ItemServicioClinicaOrderByRelevanceFieldEnum)[keyof typeof ItemServicioClinicaOrderByRelevanceFieldEnum]
 
 
 export const FotoServicioOrderByRelevanceFieldEnum = {
@@ -1849,6 +1943,7 @@ export type GlobalOmitConfig = {
   productoOrden?: Prisma.ProductoOrdenOmit
   gasto?: Prisma.GastoOmit
   servicioClinica?: Prisma.ServicioClinicaOmit
+  itemServicioClinica?: Prisma.ItemServicioClinicaOmit
   fotoServicio?: Prisma.FotoServicioOmit
   pedidoConfeccion?: Prisma.PedidoConfeccionOmit
   medidaSnapshot?: Prisma.MedidaSnapshotOmit

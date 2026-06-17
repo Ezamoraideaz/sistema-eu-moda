@@ -57,6 +57,7 @@ export const ModelName = {
   ProductoOrden: 'ProductoOrden',
   Gasto: 'Gasto',
   ServicioClinica: 'ServicioClinica',
+  ItemServicioClinica: 'ItemServicioClinica',
   FotoServicio: 'FotoServicio',
   PedidoConfeccion: 'PedidoConfeccion',
   MedidaSnapshot: 'MedidaSnapshot',
@@ -177,6 +178,22 @@ export const ServicioClinicaScalarFieldEnum = {
 } as const
 
 export type ServicioClinicaScalarFieldEnum = (typeof ServicioClinicaScalarFieldEnum)[keyof typeof ServicioClinicaScalarFieldEnum]
+
+
+export const ItemServicioClinicaScalarFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  prendaTipo: 'prendaTipo',
+  prendaDescripcion: 'prendaDescripcion',
+  trabajoSolicitado: 'trabajoSolicitado',
+  valorCotizado: 'valorCotizado',
+  anticipo: 'anticipo',
+  saldoPendiente: 'saldoPendiente',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ItemServicioClinicaScalarFieldEnum = (typeof ItemServicioClinicaScalarFieldEnum)[keyof typeof ItemServicioClinicaScalarFieldEnum]
 
 
 export const FotoServicioScalarFieldEnum = {
@@ -352,6 +369,17 @@ export const ServicioClinicaOrderByRelevanceFieldEnum = {
 } as const
 
 export type ServicioClinicaOrderByRelevanceFieldEnum = (typeof ServicioClinicaOrderByRelevanceFieldEnum)[keyof typeof ServicioClinicaOrderByRelevanceFieldEnum]
+
+
+export const ItemServicioClinicaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  servicioId: 'servicioId',
+  prendaTipo: 'prendaTipo',
+  prendaDescripcion: 'prendaDescripcion',
+  trabajoSolicitado: 'trabajoSolicitado'
+} as const
+
+export type ItemServicioClinicaOrderByRelevanceFieldEnum = (typeof ItemServicioClinicaOrderByRelevanceFieldEnum)[keyof typeof ItemServicioClinicaOrderByRelevanceFieldEnum]
 
 
 export const FotoServicioOrderByRelevanceFieldEnum = {

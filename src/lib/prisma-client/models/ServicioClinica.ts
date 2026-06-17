@@ -238,15 +238,15 @@ export type ServicioClinicaGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type ServicioClinicaGroupByOutputType = {
   id: string
   clienteId: string
-  prendaTipo: string
+  prendaTipo: string | null
   prendaDescripcion: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado: string | null
   estado: $Enums.EstadoOrden
   fechaRecibido: Date
   fechaEntregaEstimada: Date | null
-  valorCotizado: runtime.Decimal
-  anticipo: runtime.Decimal
-  saldoPendiente: runtime.Decimal
+  valorCotizado: runtime.Decimal | null
+  anticipo: runtime.Decimal | null
+  saldoPendiente: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
   _count: ServicioClinicaCountAggregateOutputType | null
@@ -277,18 +277,19 @@ export type ServicioClinicaWhereInput = {
   NOT?: Prisma.ServicioClinicaWhereInput | Prisma.ServicioClinicaWhereInput[]
   id?: Prisma.StringFilter<"ServicioClinica"> | string
   clienteId?: Prisma.StringFilter<"ServicioClinica"> | string
-  prendaTipo?: Prisma.StringFilter<"ServicioClinica"> | string
+  prendaTipo?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   prendaDescripcion?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
-  trabajoSolicitado?: Prisma.StringFilter<"ServicioClinica"> | string
+  trabajoSolicitado?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   estado?: Prisma.EnumEstadoOrdenFilter<"ServicioClinica"> | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   fechaEntregaEstimada?: Prisma.DateTimeNullableFilter<"ServicioClinica"> | Date | string | null
-  valorCotizado?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
+  items?: Prisma.ItemServicioClinicaListRelationFilter
   fotos?: Prisma.FotoServicioListRelationFilter
   gastos?: Prisma.GastoListRelationFilter
 }
@@ -296,18 +297,19 @@ export type ServicioClinicaWhereInput = {
 export type ServicioClinicaOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
-  prendaTipo?: Prisma.SortOrder
+  prendaTipo?: Prisma.SortOrderInput | Prisma.SortOrder
   prendaDescripcion?: Prisma.SortOrderInput | Prisma.SortOrder
-  trabajoSolicitado?: Prisma.SortOrder
+  trabajoSolicitado?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaRecibido?: Prisma.SortOrder
   fechaEntregaEstimada?: Prisma.SortOrderInput | Prisma.SortOrder
-  valorCotizado?: Prisma.SortOrder
-  anticipo?: Prisma.SortOrder
-  saldoPendiente?: Prisma.SortOrder
+  valorCotizado?: Prisma.SortOrderInput | Prisma.SortOrder
+  anticipo?: Prisma.SortOrderInput | Prisma.SortOrder
+  saldoPendiente?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   cliente?: Prisma.ClienteOrderByWithRelationInput
+  items?: Prisma.ItemServicioClinicaOrderByRelationAggregateInput
   fotos?: Prisma.FotoServicioOrderByRelationAggregateInput
   gastos?: Prisma.GastoOrderByRelationAggregateInput
   _relevance?: Prisma.ServicioClinicaOrderByRelevanceInput
@@ -319,18 +321,19 @@ export type ServicioClinicaWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ServicioClinicaWhereInput[]
   NOT?: Prisma.ServicioClinicaWhereInput | Prisma.ServicioClinicaWhereInput[]
   clienteId?: Prisma.StringFilter<"ServicioClinica"> | string
-  prendaTipo?: Prisma.StringFilter<"ServicioClinica"> | string
+  prendaTipo?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   prendaDescripcion?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
-  trabajoSolicitado?: Prisma.StringFilter<"ServicioClinica"> | string
+  trabajoSolicitado?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   estado?: Prisma.EnumEstadoOrdenFilter<"ServicioClinica"> | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   fechaEntregaEstimada?: Prisma.DateTimeNullableFilter<"ServicioClinica"> | Date | string | null
-  valorCotizado?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
+  items?: Prisma.ItemServicioClinicaListRelationFilter
   fotos?: Prisma.FotoServicioListRelationFilter
   gastos?: Prisma.GastoListRelationFilter
 }, "id">
@@ -338,15 +341,15 @@ export type ServicioClinicaWhereUniqueInput = Prisma.AtLeast<{
 export type ServicioClinicaOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
-  prendaTipo?: Prisma.SortOrder
+  prendaTipo?: Prisma.SortOrderInput | Prisma.SortOrder
   prendaDescripcion?: Prisma.SortOrderInput | Prisma.SortOrder
-  trabajoSolicitado?: Prisma.SortOrder
+  trabajoSolicitado?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaRecibido?: Prisma.SortOrder
   fechaEntregaEstimada?: Prisma.SortOrderInput | Prisma.SortOrder
-  valorCotizado?: Prisma.SortOrder
-  anticipo?: Prisma.SortOrder
-  saldoPendiente?: Prisma.SortOrder
+  valorCotizado?: Prisma.SortOrderInput | Prisma.SortOrder
+  anticipo?: Prisma.SortOrderInput | Prisma.SortOrder
+  saldoPendiente?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ServicioClinicaCountOrderByAggregateInput
@@ -362,33 +365,34 @@ export type ServicioClinicaScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ServicioClinicaScalarWhereWithAggregatesInput | Prisma.ServicioClinicaScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ServicioClinica"> | string
   clienteId?: Prisma.StringWithAggregatesFilter<"ServicioClinica"> | string
-  prendaTipo?: Prisma.StringWithAggregatesFilter<"ServicioClinica"> | string
+  prendaTipo?: Prisma.StringNullableWithAggregatesFilter<"ServicioClinica"> | string | null
   prendaDescripcion?: Prisma.StringNullableWithAggregatesFilter<"ServicioClinica"> | string | null
-  trabajoSolicitado?: Prisma.StringWithAggregatesFilter<"ServicioClinica"> | string
+  trabajoSolicitado?: Prisma.StringNullableWithAggregatesFilter<"ServicioClinica"> | string | null
   estado?: Prisma.EnumEstadoOrdenWithAggregatesFilter<"ServicioClinica"> | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeWithAggregatesFilter<"ServicioClinica"> | Date | string
   fechaEntregaEstimada?: Prisma.DateTimeNullableWithAggregatesFilter<"ServicioClinica"> | Date | string | null
-  valorCotizado?: Prisma.DecimalWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.DecimalNullableWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.DecimalNullableWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.DecimalNullableWithAggregatesFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ServicioClinica"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ServicioClinica"> | Date | string
 }
 
 export type ServicioClinicaCreateInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosClinicaInput
+  items?: Prisma.ItemServicioClinicaCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoCreateNestedManyWithoutServicioClinicaInput
 }
@@ -396,35 +400,37 @@ export type ServicioClinicaCreateInput = {
 export type ServicioClinicaUncheckedCreateInput = {
   id?: string
   clienteId: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioUncheckedCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoUncheckedCreateNestedManyWithoutServicioClinicaInput
 }
 
 export type ServicioClinicaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosClinicaNestedInput
+  items?: Prisma.ItemServicioClinicaUpdateManyWithoutServicioNestedInput
   fotos?: Prisma.FotoServicioUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUpdateManyWithoutServicioClinicaNestedInput
 }
@@ -432,17 +438,18 @@ export type ServicioClinicaUpdateInput = {
 export type ServicioClinicaUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clienteId?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedUpdateManyWithoutServicioNestedInput
   fotos?: Prisma.FotoServicioUncheckedUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUncheckedUpdateManyWithoutServicioClinicaNestedInput
 }
@@ -450,30 +457,30 @@ export type ServicioClinicaUncheckedUpdateInput = {
 export type ServicioClinicaCreateManyInput = {
   id?: string
   clienteId: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ServicioClinicaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -481,15 +488,15 @@ export type ServicioClinicaUpdateManyMutationInput = {
 export type ServicioClinicaUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clienteId?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -638,6 +645,28 @@ export type ServicioClinicaUpdateOneWithoutGastosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServicioClinicaUpdateToOneWithWhereWithoutGastosInput, Prisma.ServicioClinicaUpdateWithoutGastosInput>, Prisma.ServicioClinicaUncheckedUpdateWithoutGastosInput>
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type ServicioClinicaCreateNestedOneWithoutItemsInput = {
+  create?: Prisma.XOR<Prisma.ServicioClinicaCreateWithoutItemsInput, Prisma.ServicioClinicaUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.ServicioClinicaCreateOrConnectWithoutItemsInput
+  connect?: Prisma.ServicioClinicaWhereUniqueInput
+}
+
+export type ServicioClinicaUpdateOneRequiredWithoutItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServicioClinicaCreateWithoutItemsInput, Prisma.ServicioClinicaUncheckedCreateWithoutItemsInput>
+  connectOrCreate?: Prisma.ServicioClinicaCreateOrConnectWithoutItemsInput
+  upsert?: Prisma.ServicioClinicaUpsertWithoutItemsInput
+  connect?: Prisma.ServicioClinicaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServicioClinicaUpdateToOneWithWhereWithoutItemsInput, Prisma.ServicioClinicaUpdateWithoutItemsInput>, Prisma.ServicioClinicaUncheckedUpdateWithoutItemsInput>
+}
+
 export type ServicioClinicaCreateNestedOneWithoutFotosInput = {
   create?: Prisma.XOR<Prisma.ServicioClinicaCreateWithoutFotosInput, Prisma.ServicioClinicaUncheckedCreateWithoutFotosInput>
   connectOrCreate?: Prisma.ServicioClinicaCreateOrConnectWithoutFotosInput
@@ -654,34 +683,36 @@ export type ServicioClinicaUpdateOneRequiredWithoutFotosNestedInput = {
 
 export type ServicioClinicaCreateWithoutClienteInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.ItemServicioClinicaCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoCreateNestedManyWithoutServicioClinicaInput
 }
 
 export type ServicioClinicaUncheckedCreateWithoutClienteInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioUncheckedCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoUncheckedCreateNestedManyWithoutServicioClinicaInput
 }
@@ -718,50 +749,52 @@ export type ServicioClinicaScalarWhereInput = {
   NOT?: Prisma.ServicioClinicaScalarWhereInput | Prisma.ServicioClinicaScalarWhereInput[]
   id?: Prisma.StringFilter<"ServicioClinica"> | string
   clienteId?: Prisma.StringFilter<"ServicioClinica"> | string
-  prendaTipo?: Prisma.StringFilter<"ServicioClinica"> | string
+  prendaTipo?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   prendaDescripcion?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
-  trabajoSolicitado?: Prisma.StringFilter<"ServicioClinica"> | string
+  trabajoSolicitado?: Prisma.StringNullableFilter<"ServicioClinica"> | string | null
   estado?: Prisma.EnumEstadoOrdenFilter<"ServicioClinica"> | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   fechaEntregaEstimada?: Prisma.DateTimeNullableFilter<"ServicioClinica"> | Date | string | null
-  valorCotizado?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.DecimalNullableFilter<"ServicioClinica"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ServicioClinica"> | Date | string
 }
 
 export type ServicioClinicaCreateWithoutGastosInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosClinicaInput
+  items?: Prisma.ItemServicioClinicaCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioCreateNestedManyWithoutServicioInput
 }
 
 export type ServicioClinicaUncheckedCreateWithoutGastosInput = {
   id?: string
   clienteId: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedCreateNestedManyWithoutServicioInput
   fotos?: Prisma.FotoServicioUncheckedCreateNestedManyWithoutServicioInput
 }
 
@@ -783,69 +816,161 @@ export type ServicioClinicaUpdateToOneWithWhereWithoutGastosInput = {
 
 export type ServicioClinicaUpdateWithoutGastosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosClinicaNestedInput
+  items?: Prisma.ItemServicioClinicaUpdateManyWithoutServicioNestedInput
   fotos?: Prisma.FotoServicioUpdateManyWithoutServicioNestedInput
 }
 
 export type ServicioClinicaUncheckedUpdateWithoutGastosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clienteId?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedUpdateManyWithoutServicioNestedInput
+  fotos?: Prisma.FotoServicioUncheckedUpdateManyWithoutServicioNestedInput
+}
+
+export type ServicioClinicaCreateWithoutItemsInput = {
+  id?: string
+  prendaTipo?: string | null
+  prendaDescripcion?: string | null
+  trabajoSolicitado?: string | null
+  estado?: $Enums.EstadoOrden
+  fechaRecibido?: Date | string
+  fechaEntregaEstimada?: Date | string | null
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  cliente: Prisma.ClienteCreateNestedOneWithoutServiciosClinicaInput
+  fotos?: Prisma.FotoServicioCreateNestedManyWithoutServicioInput
+  gastos?: Prisma.GastoCreateNestedManyWithoutServicioClinicaInput
+}
+
+export type ServicioClinicaUncheckedCreateWithoutItemsInput = {
+  id?: string
+  clienteId: string
+  prendaTipo?: string | null
+  prendaDescripcion?: string | null
+  trabajoSolicitado?: string | null
+  estado?: $Enums.EstadoOrden
+  fechaRecibido?: Date | string
+  fechaEntregaEstimada?: Date | string | null
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  fotos?: Prisma.FotoServicioUncheckedCreateNestedManyWithoutServicioInput
+  gastos?: Prisma.GastoUncheckedCreateNestedManyWithoutServicioClinicaInput
+}
+
+export type ServicioClinicaCreateOrConnectWithoutItemsInput = {
+  where: Prisma.ServicioClinicaWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServicioClinicaCreateWithoutItemsInput, Prisma.ServicioClinicaUncheckedCreateWithoutItemsInput>
+}
+
+export type ServicioClinicaUpsertWithoutItemsInput = {
+  update: Prisma.XOR<Prisma.ServicioClinicaUpdateWithoutItemsInput, Prisma.ServicioClinicaUncheckedUpdateWithoutItemsInput>
+  create: Prisma.XOR<Prisma.ServicioClinicaCreateWithoutItemsInput, Prisma.ServicioClinicaUncheckedCreateWithoutItemsInput>
+  where?: Prisma.ServicioClinicaWhereInput
+}
+
+export type ServicioClinicaUpdateToOneWithWhereWithoutItemsInput = {
+  where?: Prisma.ServicioClinicaWhereInput
+  data: Prisma.XOR<Prisma.ServicioClinicaUpdateWithoutItemsInput, Prisma.ServicioClinicaUncheckedUpdateWithoutItemsInput>
+}
+
+export type ServicioClinicaUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
+  fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosClinicaNestedInput
+  fotos?: Prisma.FotoServicioUpdateManyWithoutServicioNestedInput
+  gastos?: Prisma.GastoUpdateManyWithoutServicioClinicaNestedInput
+}
+
+export type ServicioClinicaUncheckedUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clienteId?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
+  fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fotos?: Prisma.FotoServicioUncheckedUpdateManyWithoutServicioNestedInput
+  gastos?: Prisma.GastoUncheckedUpdateManyWithoutServicioClinicaNestedInput
 }
 
 export type ServicioClinicaCreateWithoutFotosInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosClinicaInput
+  items?: Prisma.ItemServicioClinicaCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoCreateNestedManyWithoutServicioClinicaInput
 }
 
 export type ServicioClinicaUncheckedCreateWithoutFotosInput = {
   id?: string
   clienteId: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedCreateNestedManyWithoutServicioInput
   gastos?: Prisma.GastoUncheckedCreateNestedManyWithoutServicioClinicaInput
 }
 
@@ -867,98 +992,102 @@ export type ServicioClinicaUpdateToOneWithWhereWithoutFotosInput = {
 
 export type ServicioClinicaUpdateWithoutFotosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosClinicaNestedInput
+  items?: Prisma.ItemServicioClinicaUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUpdateManyWithoutServicioClinicaNestedInput
 }
 
 export type ServicioClinicaUncheckedUpdateWithoutFotosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clienteId?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUncheckedUpdateManyWithoutServicioClinicaNestedInput
 }
 
 export type ServicioClinicaCreateManyClienteInput = {
   id?: string
-  prendaTipo: string
+  prendaTipo?: string | null
   prendaDescripcion?: string | null
-  trabajoSolicitado: string
+  trabajoSolicitado?: string | null
   estado?: $Enums.EstadoOrden
   fechaRecibido?: Date | string
   fechaEntregaEstimada?: Date | string | null
-  valorCotizado: runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ServicioClinicaUpdateWithoutClienteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemServicioClinicaUpdateManyWithoutServicioNestedInput
   fotos?: Prisma.FotoServicioUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUpdateManyWithoutServicioClinicaNestedInput
 }
 
 export type ServicioClinicaUncheckedUpdateWithoutClienteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ItemServicioClinicaUncheckedUpdateManyWithoutServicioNestedInput
   fotos?: Prisma.FotoServicioUncheckedUpdateManyWithoutServicioNestedInput
   gastos?: Prisma.GastoUncheckedUpdateManyWithoutServicioClinicaNestedInput
 }
 
 export type ServicioClinicaUncheckedUpdateManyWithoutClienteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  prendaTipo?: Prisma.StringFieldUpdateOperationsInput | string
+  prendaTipo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   prendaDescripcion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  trabajoSolicitado?: Prisma.StringFieldUpdateOperationsInput | string
+  trabajoSolicitado?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoOrdenFieldUpdateOperationsInput | $Enums.EstadoOrden
   fechaRecibido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaEntregaEstimada?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  valorCotizado?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  anticipo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  saldoPendiente?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valorCotizado?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  anticipo?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  saldoPendiente?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -969,11 +1098,13 @@ export type ServicioClinicaUncheckedUpdateManyWithoutClienteInput = {
  */
 
 export type ServicioClinicaCountOutputType = {
+  items: number
   fotos: number
   gastos: number
 }
 
 export type ServicioClinicaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  items?: boolean | ServicioClinicaCountOutputTypeCountItemsArgs
   fotos?: boolean | ServicioClinicaCountOutputTypeCountFotosArgs
   gastos?: boolean | ServicioClinicaCountOutputTypeCountGastosArgs
 }
@@ -986,6 +1117,13 @@ export type ServicioClinicaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
    * Select specific fields to fetch from the ServicioClinicaCountOutputType
    */
   select?: Prisma.ServicioClinicaCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ServicioClinicaCountOutputType without action
+ */
+export type ServicioClinicaCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ItemServicioClinicaWhereInput
 }
 
 /**
@@ -1018,6 +1156,7 @@ export type ServicioClinicaSelect<ExtArgs extends runtime.Types.Extensions.Inter
   createdAt?: boolean
   updatedAt?: boolean
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
+  items?: boolean | Prisma.ServicioClinica$itemsArgs<ExtArgs>
   fotos?: boolean | Prisma.ServicioClinica$fotosArgs<ExtArgs>
   gastos?: boolean | Prisma.ServicioClinica$gastosArgs<ExtArgs>
   _count?: boolean | Prisma.ServicioClinicaCountOutputTypeDefaultArgs<ExtArgs>
@@ -1044,6 +1183,7 @@ export type ServicioClinicaSelectScalar = {
 export type ServicioClinicaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clienteId" | "prendaTipo" | "prendaDescripcion" | "trabajoSolicitado" | "estado" | "fechaRecibido" | "fechaEntregaEstimada" | "valorCotizado" | "anticipo" | "saldoPendiente" | "createdAt" | "updatedAt", ExtArgs["result"]["servicioClinica"]>
 export type ServicioClinicaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
+  items?: boolean | Prisma.ServicioClinica$itemsArgs<ExtArgs>
   fotos?: boolean | Prisma.ServicioClinica$fotosArgs<ExtArgs>
   gastos?: boolean | Prisma.ServicioClinica$gastosArgs<ExtArgs>
   _count?: boolean | Prisma.ServicioClinicaCountOutputTypeDefaultArgs<ExtArgs>
@@ -1053,21 +1193,22 @@ export type $ServicioClinicaPayload<ExtArgs extends runtime.Types.Extensions.Int
   name: "ServicioClinica"
   objects: {
     cliente: Prisma.$ClientePayload<ExtArgs>
+    items: Prisma.$ItemServicioClinicaPayload<ExtArgs>[]
     fotos: Prisma.$FotoServicioPayload<ExtArgs>[]
     gastos: Prisma.$GastoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     clienteId: string
-    prendaTipo: string
+    prendaTipo: string | null
     prendaDescripcion: string | null
-    trabajoSolicitado: string
+    trabajoSolicitado: string | null
     estado: $Enums.EstadoOrden
     fechaRecibido: Date
     fechaEntregaEstimada: Date | null
-    valorCotizado: runtime.Decimal
-    anticipo: runtime.Decimal
-    saldoPendiente: runtime.Decimal
+    valorCotizado: runtime.Decimal | null
+    anticipo: runtime.Decimal | null
+    saldoPendiente: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["servicioClinica"]>
@@ -1411,6 +1552,7 @@ readonly fields: ServicioClinicaFieldRefs;
 export interface Prisma__ServicioClinicaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   cliente<T extends Prisma.ClienteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClienteDefaultArgs<ExtArgs>>): Prisma.Prisma__ClienteClient<runtime.Types.Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  items<T extends Prisma.ServicioClinica$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicioClinica$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemServicioClinicaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fotos<T extends Prisma.ServicioClinica$fotosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicioClinica$fotosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FotoServicioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gastos<T extends Prisma.ServicioClinica$gastosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicioClinica$gastosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GastoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1800,6 +1942,30 @@ export type ServicioClinicaDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ServicioClinicas to delete.
    */
   limit?: number
+}
+
+/**
+ * ServicioClinica.items
+ */
+export type ServicioClinica$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ItemServicioClinica
+   */
+  select?: Prisma.ItemServicioClinicaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ItemServicioClinica
+   */
+  omit?: Prisma.ItemServicioClinicaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemServicioClinicaInclude<ExtArgs> | null
+  where?: Prisma.ItemServicioClinicaWhereInput
+  orderBy?: Prisma.ItemServicioClinicaOrderByWithRelationInput | Prisma.ItemServicioClinicaOrderByWithRelationInput[]
+  cursor?: Prisma.ItemServicioClinicaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ItemServicioClinicaScalarFieldEnum | Prisma.ItemServicioClinicaScalarFieldEnum[]
 }
 
 /**

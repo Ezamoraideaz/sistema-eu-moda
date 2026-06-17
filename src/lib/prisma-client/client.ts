@@ -72,6 +72,11 @@ export type Gasto = Prisma.GastoModel
  */
 export type ServicioClinica = Prisma.ServicioClinicaModel
 /**
+ * Model ItemServicioClinica
+ * 
+ */
+export type ItemServicioClinica = Prisma.ItemServicioClinicaModel
+/**
  * Model FotoServicio
  * 
  */
