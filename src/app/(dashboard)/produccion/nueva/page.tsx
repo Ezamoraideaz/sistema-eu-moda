@@ -1,12 +1,10 @@
 import { redirect } from "next/navigation";
 import { OrdenForm } from "../orden-form";
 import { TestOrdenForm } from "../test-orden";
-import { requireSession } from "@/lib/auth-guards";
 
 export default async function NuevaOrdenPage(props: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const session = await requireSession();
   const searchParams = await props.searchParams;
   const clientePre = typeof searchParams.cliente === "string" ? searchParams.cliente : undefined;
 
@@ -16,7 +14,7 @@ export default async function NuevaOrdenPage(props: {
 
       <TestOrdenForm />
 
-      <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Formulario Normal</h2>
         <OrdenForm
           clientePre={clientePre}
