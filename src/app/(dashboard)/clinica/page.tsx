@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/db";
 import { requireRole } from "@/lib/auth-guards";
 import Link from "next/link";
-import { useState } from "react";
 import { ServicioForm } from "./servicio-form";
 
 export default async function ClinicaPage() {
