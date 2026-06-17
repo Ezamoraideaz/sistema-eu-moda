@@ -32,14 +32,18 @@ export function ClienteForm({
   const fieldErrors = state?.fieldErrors ?? {};
 
   useEffect(() => {
-    if (state && !state.error && !state.fieldErrors) {
+    if (state?.success) {
       setSuccessMessage("✅ Cliente guardado exitosamente. Redirigiendo...");
       const timer = setTimeout(() => {
-        window.location.reload();
+        if (state.clienteId) {
+          window.location.href = `/clientes/${state.clienteId}`;
+        } else {
+          window.location.href = "/clientes";
+        }
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [state]);
+  }, [state?.success, state?.clienteId]);
 
   return (
     <form action={formAction} className="max-w-xl space-y-4 rounded-lg border border-gray-200 bg-white p-6">

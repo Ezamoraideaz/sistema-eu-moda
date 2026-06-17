@@ -7,7 +7,7 @@ import { requireRole } from "@/lib/auth-guards";
 import { PERMISSIONS } from "@/lib/auth-guards";
 import { clienteSchema } from "@/lib/validation/cliente.schema";
 
-export type ClienteFormState = { error?: string; fieldErrors?: Record<string, string[]> } | undefined;
+export type ClienteFormState = { error?: string; fieldErrors?: Record<string, string[]>; success?: boolean; clienteId?: string } | undefined;
 
 function readClienteForm(formData: FormData) {
   return {
@@ -24,16 +24,21 @@ function readClienteForm(formData: FormData) {
 }
 
 export async function createCliente(_prevState: ClienteFormState, formData: FormData): Promise<ClienteFormState> {
-  await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
+  try {
+    await requireRole(PERMISSIONS.REGISTRAR_CLIENTE as any);
 
-  const parsed = clienteSchema.safeParse(readClienteForm(formData));
-  if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
+    const parsed = clienteSchema.safeParse(readClienteForm(formData));
+    if (!parsed.success) {
+      return { fieldErrors: parsed.error.flatten().fieldErrors };
+    }
+
+    const cliente = await prisma.cliente.create({ data: parsed.data });
+    revalidatePath("/clientes");
+
+    return { success: true, clienteId: cliente.id };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Error al crear cliente" };
   }
-
-  const cliente = await prisma.cliente.create({ data: parsed.data });
-  revalidatePath("/clientes");
-  redirect(`/clientes/${cliente.id}`);
 }
 
 export async function updateCliente(_prevState: ClienteFormState, formData: FormData): Promise<ClienteFormState> {
