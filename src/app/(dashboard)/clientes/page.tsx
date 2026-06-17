@@ -4,12 +4,14 @@ import { requireSession, PERMISSIONS } from "@/lib/auth-guards";
 
 const TIPO_LABELS: Record<string, string> = { PERSONA: "Persona", EMPRESA: "Empresa" };
 
-export default async function ClientesPage(props: PageProps<"/clientes">) {
+export default async function ClientesPage(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const session = await requireSession();
   const searchParams = await props.searchParams;
   const q = typeof searchParams.q === "string" ? searchParams.q.trim() : "";
 
-  const clientes = await prisma.cliente.findMany({
+  const clientes: Awaited<ReturnType<typeof prisma.cliente.findMany>> = await prisma.cliente.findMany({
     where: q ? { nombre: { contains: q } } : undefined,
     orderBy: { nombre: "asc" },
     take: 50,
@@ -49,7 +51,7 @@ export default async function ClientesPage(props: PageProps<"/clientes">) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {clientes.map((cliente) => (
+            {clientes.map((cliente: typeof clientes[number]) => (
               <tr key={cliente.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2">
                   <Link href={`/clientes/${cliente.id}`} className="font-medium text-gray-900 hover:underline">

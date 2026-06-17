@@ -25,7 +25,7 @@ export default async function DetalleOrdenPage(props: {
   }
 
   const rentabilidad = await calcularRentabilidadOrden(id);
-  const totalIngresos = orden.productos.reduce((sum, p) => sum + Number(p.total), 0);
+  const totalIngresos = orden.productos.reduce((sum: number, p: typeof orden.productos[number]) => sum + Number(p.total), 0);
 
   const ESTADO_LABELS: Record<string, string> = {
     PENDIENTE: "Pendiente",
@@ -90,7 +90,7 @@ export default async function DetalleOrdenPage(props: {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {orden.productos.map((producto) => (
+              {orden.productos.map((producto: typeof orden.productos[number]) => (
                 <tr key={producto.id}>
                   <td className="px-4 py-2">{producto.tipoPrenda}</td>
                   <td className="px-4 py-2">{producto.cantidad}</td>

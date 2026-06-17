@@ -81,9 +81,9 @@ export default async function ProduccionPage(props: {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {ordenes.map((orden) => {
+            {ordenes.map((orden: typeof ordenes[number]) => {
               const totalIngresos = orden.productos.reduce(
-                (sum, p) => sum + Number(p.total),
+                (sum: number, p: typeof orden.productos[number]) => sum + Number(p.total),
                 0
               );
               return (

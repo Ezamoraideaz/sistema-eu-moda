@@ -1,5 +1,5 @@
 import "server-only";
-import { PrismaClient } from "@/generated/prisma/client";
+import { PrismaClient } from "@/lib/prisma-client/client";
 import { createMariaDbAdapter } from "@/lib/db-adapter";
 
 // HostGator shared hosting caps total concurrent MySQL connections low.

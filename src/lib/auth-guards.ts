@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { auth } from "@/lib/auth";
-import type { Role } from "@/generated/prisma/client";
+import type { Role } from "@/lib/prisma-client/client";
 
 export const getSession = cache(async () => auth());
 
