@@ -1,13 +1,21 @@
 import { z } from "zod";
 
 const optionalText = z.preprocess(
-  (value) => (typeof value === "string" && value.trim() === "" ? undefined : value),
+  (value) => {
+    if (value === null || value === undefined) return undefined;
+    if (typeof value === "string" && value.trim() === "") return undefined;
+    return value;
+  },
   z.string().trim().max(200).optional(),
 );
 
 const optionalEmail = z.preprocess(
-  (value) => (typeof value === "string" && value.trim() === "" ? undefined : value),
-  z.email("Correo inválido").optional(),
+  (value) => {
+    if (value === null || value === undefined) return undefined;
+    if (typeof value === "string" && value.trim() === "") return undefined;
+    return value;
+  },
+  z.string().email("Correo inválido").optional(),
 );
 
 export const clienteSchema = z
