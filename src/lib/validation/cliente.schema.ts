@@ -30,14 +30,32 @@ export const clienteSchema = z
     contactoNombre: optionalText,
     contactoTelefono: optionalText,
   })
-  .check((ctx) => {
-    if (ctx.value.tipo === "EMPRESA" && !ctx.value.documento) {
-      ctx.issues.push({
-        code: "custom",
-        message: "El NIT es obligatorio para clientes tipo empresa.",
-        path: ["documento"],
-        input: ctx.value.documento,
-      });
+  .superRefine((data, ctx) => {
+    if (data.tipo === "PERSONA") {
+      // Para PERSONA: teléfono es obligatorio
+      if (!data.telefono || data.telefono.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "El teléfono es obligatorio para personas.",
+          path: ["telefono"],
+        });
+      }
+    } else if (data.tipo === "EMPRESA") {
+      // Para EMPRESA: NIT y teléfono obligatorios
+      if (!data.documento || data.documento.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "El NIT es obligatorio para empresas.",
+          path: ["documento"],
+        });
+      }
+      if (!data.telefono || data.telefono.trim() === "") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "El teléfono es obligatorio.",
+          path: ["telefono"],
+        });
+      }
     }
   });
 

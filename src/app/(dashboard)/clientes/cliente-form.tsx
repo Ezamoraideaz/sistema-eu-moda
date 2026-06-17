@@ -74,17 +74,29 @@ export function ClienteForm({
         </select>
       </div>
 
+      {/* CAMPOS COMUNES */}
       <Field label={tipo === "EMPRESA" ? "Razón social" : "Nombre"} name="nombre" defaultValue={defaultValues?.nombre} errors={fieldErrors.nombre} required />
-      <Field label={tipo === "EMPRESA" ? "NIT" : "Documento"} name="documento" defaultValue={defaultValues?.documento} errors={fieldErrors.documento} />
-      <Field label="Teléfono" name="telefono" defaultValue={defaultValues?.telefono} errors={fieldErrors.telefono} />
-      <Field label="WhatsApp" name="whatsapp" defaultValue={defaultValues?.whatsapp} errors={fieldErrors.whatsapp} />
+      <Field label="Teléfono" name="telefono" defaultValue={defaultValues?.telefono} errors={fieldErrors.telefono} required />
       <Field label="Correo" name="correo" type="email" defaultValue={defaultValues?.correo} errors={fieldErrors.correo} />
-      <Field label="Dirección" name="direccion" defaultValue={defaultValues?.direccion} errors={fieldErrors.direccion} />
 
+      {/* CAMPOS SOLO PARA EMPRESA */}
       {tipo === "EMPRESA" && (
         <>
+          <Field label="NIT" name="documento" defaultValue={defaultValues?.documento} errors={fieldErrors.documento} required />
+          <Field label="Dirección" name="direccion" defaultValue={defaultValues?.direccion} errors={fieldErrors.direccion} />
           <Field label="Nombre de contacto" name="contactoNombre" defaultValue={defaultValues?.contactoNombre} errors={fieldErrors.contactoNombre} />
           <Field label="Teléfono de contacto" name="contactoTelefono" defaultValue={defaultValues?.contactoTelefono} errors={fieldErrors.contactoTelefono} />
+        </>
+      )}
+
+      {/* CAMPO OCULTO PARA PERSONA (enviar null) */}
+      {tipo === "PERSONA" && (
+        <>
+          <input type="hidden" name="documento" value="" />
+          <input type="hidden" name="whatsapp" value="" />
+          <input type="hidden" name="direccion" value="" />
+          <input type="hidden" name="contactoNombre" value="" />
+          <input type="hidden" name="contactoTelefono" value="" />
         </>
       )}
 
@@ -117,7 +129,7 @@ function Field({
   return (
     <div>
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
         id={name}
