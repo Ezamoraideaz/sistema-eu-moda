@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { crearOrdenAction } from "./actions";
+import { ClientePicker } from "@/components/clientes/cliente-picker";
 
 export function OrdenFormSimple() {
   const [clienteId, setClienteId] = useState("");
+  const [clienteNombre, setClienteNombre] = useState("");
   const [numero, setNumero] = useState("");
   const [productos, setProductos] = useState<Array<{ tipoPrenda: string; cantidad: number; valorUnitario: string }>>([
     { tipoPrenda: "", cantidad: 1, valorUnitario: "" },
@@ -12,6 +14,15 @@ export function OrdenFormSimple() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  // Generar número de orden automáticamente
+  useEffect(() => {
+    if (!numero) {
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000);
+      setNumero(`ORD-${timestamp.toString().slice(-6)}-${random.toString().padStart(3, '0')}`);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,25 +75,25 @@ export function OrdenFormSimple() {
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">ID Cliente *</label>
-        <input
-          type="text"
-          value={clienteId}
-          onChange={(e) => setClienteId(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
-          required
+        <label className="block text-sm font-medium text-gray-700">Cliente *</label>
+        <ClientePicker
+          onSelect={(cliente) => {
+            setClienteId(cliente.id);
+            setClienteNombre(cliente.nombre);
+          }}
+          placeholder="Buscar cliente por nombre, teléfono o NIT..."
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Número de orden *</label>
+        <label className="block text-sm font-medium text-gray-700">Número de orden (Generado automáticamente)</label>
         <input
           type="text"
           value={numero}
-          onChange={(e) => setNumero(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-gray-500 focus:outline-none"
-          required
+          disabled
+          className="mt-1 w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-600 cursor-not-allowed"
         />
+        <p className="mt-1 text-xs text-gray-500">Se genera automáticamente al crear la orden</p>
       </div>
 
       <div className="space-y-4">
